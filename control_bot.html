@@ -57,8 +57,24 @@
 </div>
 <script>
 document.getElementById('startButton').addEventListener('click', function() {
-  // Insérer ici le code pour démarrer le bot
-  alert('Bot démarré');
+  // Récupérer le token Discord depuis les secrets GitHub
+  var discordToken = "{{ secrets.DISCORD_TOKEN }}"; // Remplacez "{{ secrets.DISCORD_TOKEN }}" par la syntaxe appropriée pour récupérer le secret dans votre environnement
+  
+  // Vérifier si le token Discord est disponible
+  if (!discordToken) {
+    console.error('Token Discord non trouvé.');
+    return;
+  }
+
+  // Appel système pour exécuter le script Python avec le token Discord comme argument
+  var exec = require('child_process').exec;
+  exec(`python main.py ${discordToken}`, function(error, stdout, stderr) {
+    if (error) {
+      console.error('Erreur lors de l\'exécution du script Python :', error);
+    } else {
+      console.log('Sortie du script Python :', stdout);
+    }
+  });
 });
 
 document.getElementById('sendButton').addEventListener('click', function() {
