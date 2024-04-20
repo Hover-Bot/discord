@@ -30,9 +30,6 @@
   .logout {
     background-color: #f44336;
   }
-  .send {
-    background-color: #555;
-  }
   .urgence {
     background-color: #f44336;
     color: white;
@@ -50,56 +47,12 @@
 </head>
 <body>
 <div class="container">
-  <button id="startButton">Démarrer/Redémarrer</button>
-  <button id="sendButton" class="send">Envoyer un message Discord</button>
   <button id="logoutButton" class="logout">Déconnexion</button>
-  <button id="urgenceButton" class="urgence">URGENCE</button>
 </div>
 <script>
-document.getElementById('startButton').addEventListener('click', function() {
-  // Récupérer le token Discord depuis les secrets GitHub
-  var discordToken = "{{ secrets.DISCORD_TOKEN }}"; // Remplacez "{{ secrets.DISCORD_TOKEN }}" par la syntaxe appropriée pour récupérer le secret dans votre environnement
-  
-  // Vérifier si le token Discord est disponible
-  if (!discordToken) {
-    console.error('Token Discord non trouvé.');
-    return;
-  }
-
-  // Appel système pour exécuter le script Python avec le token Discord comme argument
-  var exec = require('child_process').exec;
-  exec(`python main.py ${discordToken}`, function(error, stdout, stderr) {
-    if (error) {
-      console.error('Erreur lors de l\'exécution du script Python :', error);
-    } else {
-      console.log('Sortie du script Python :', stdout);
-    }
-  });
-});
-
-document.getElementById('sendButton').addEventListener('click', function() {
-  var message = prompt('Entrez le message à envoyer :');
-  if (message) {
-    // Insérer ici le code pour envoyer le message Discord
-    alert('Message envoyé : ' + message);
-  } else {
-    alert('Veuillez entrer un message.');
-  }
-});
-
 document.getElementById('logoutButton').addEventListener('click', function() {
   // Insérer ici le code pour se déconnecter
   alert('Déconnexion');
-});
-
-document.getElementById('urgenceButton').addEventListener('click', function() {
-  var code = prompt('Entrez le code d\'urgence à 4 chiffres :');
-  if (code === '1234') {
-    // Insérer ici le code pour gérer l'urgence
-    alert('URGENCE activée');
-  } else {
-    alert('Code incorrect');
-  }
 });
 </script>
 </body>
