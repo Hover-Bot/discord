@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panneau de contrôle du bot</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+  .container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+  }
+  button {
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    padding: 15px 32px;
+    font-size: 16px;
+    margin: 10px 0;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .logout {
+    background-color: #f44336;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Bouton "Démarrer/Redémarrer" supprimé -->
+  <!-- Bouton "Envoyer un message Discord" supprimé -->
+  <button id="logoutButton" class="logout">Déconnexion</button>
+  <!-- Bouton "URGENCE" supprimé -->
+</div>
+<script>
+document.getElementById('logoutButton').addEventListener('click', function() {
+  // Rediriger vers la page précédente
+  window.history.back();
+});
+</script>
+</body>
+</html>
