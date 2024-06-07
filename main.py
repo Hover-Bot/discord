@@ -244,7 +244,7 @@ async def infoutilisateur(interaction: discord.Interaction, member: discord.Memb
 
 
 
-bot.run("MTIxNzU0MzA4OTQ2MDIxOTkxNA.Gyo8qK.8271Ud9xs9ruZF3s60ZrbKCgpUFwzwsga6HR9o")
+bot.run("tokenbotdiscord")
 
 
 
