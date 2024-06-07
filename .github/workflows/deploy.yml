@@ -17,13 +17,17 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
+      # Commenter ou supprimer cette section si vous n'avez pas de requirements.txt
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Run bot
         env:
           DISCORD_BOT_TOKEN: ${{ secrets.TOKENBOTDISCORD }}
         run: |
           python main.py
+
