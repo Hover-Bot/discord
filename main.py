@@ -17,7 +17,7 @@ slash = SlashCommand(bot)
 
 # Décorateur pour vérifier si l'utilisateur est le propriétaire
 def is_owner(func):
-    def predicate(interaction: discord.InteractionContext):
+    def predicate(interaction):
         if interaction.author.id == 1218502926885060649:
             return True
     return commands.check(predicate)
@@ -34,11 +34,11 @@ async def on_ready():
 
 # Commandes
 @slash.slash(description='Donne ma version.')
-async def version(ctx: discord.InteractionContext):
+async def version(ctx):
     await ctx.send('Je suis à ma 38ème version')
 
 @slash.slash(description='Désactive le bot')
-async def eteindre(ctx: discord.InteractionContext):
+async def eteindre(ctx):
     await ctx.send(f"Commande acceptée.", ephemeral=True)
     await asyncio.sleep(2)
     await ctx.send("Le bot va être désactivé")
@@ -48,15 +48,15 @@ async def eteindre(ctx: discord.InteractionContext):
     await bot.close()
 
 @slash.slash(description='Le bot fait des excuses.')
-async def service(ctx: discord.InteractionContext):
+async def service(ctx):
     await ctx.send('Je suis de nouveau en service, Désolé pour le dérangement. @everyone')
 
 @slash.slash(description='Donne le site du bot.')
-async def site(ctx: discord.InteractionContext):
+async def site(ctx):
     await ctx.send('Je suis fier de vous présenter mon propre site !! @everyone: https://hover-bot.github.io/discord/')
 
 @slash.slash(description='Donne le ping du bot.')
-async def ping(ctx: discord.InteractionContext):
+async def ping(ctx):
     """ Pong ! """
     before = time.monotonic()
     message = await ctx.send("Pong!")
@@ -66,7 +66,7 @@ async def ping(ctx: discord.InteractionContext):
     print(f'Ping {int(ping)}ms')
 
 @slash.slash(description='Donne les informations sur un utilisateur.')
-async def infoutilisateur(ctx: discord.InteractionContext, member: discord.Member = None):
+async def infoutilisateur(ctx, member: discord.Member = None):
     member = member or ctx.author
     embed = discord.Embed(title="User Info", description=member.mention, color=member.color)
     embed.add_field(name="Name", value=member.name, inline=True)
