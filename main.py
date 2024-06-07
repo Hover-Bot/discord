@@ -17,10 +17,10 @@ slash = SlashCommand(bot)
 
 # Décorateur pour vérifier si l'utilisateur est le propriétaire
 def is_owner(func):
-    def predicate(interaction: discord.Interaction):
-        if interaction.user.id == 1218502926885060649:
+    def predicate(interaction: discord.InteractionContext):
+        if interaction.author.id == 1218502926885060649:
             return True
-    return app_commands.check(predicate)
+    return commands.check(predicate)
 
 # Fonction pour redémarrer le programme
 def restart_program():
@@ -34,40 +34,40 @@ async def on_ready():
 
 # Commandes
 @slash.slash(description='Donne ma version.')
-async def version(interaction: discord.Interaction):
-    await interaction.response.send_message('Je suis à ma 38ème version')
+async def version(ctx: discord.InteractionContext):
+    await ctx.send('Je suis à ma 38ème version')
 
 @slash.slash(description='Désactive le bot')
-async def eteindre(interaction: discord.Interaction):
-    await interaction.response.send_message(f"Commande acceptée.", ephemeral=True)
+async def eteindre(ctx: discord.InteractionContext):
+    await ctx.send(f"Commande acceptée.", ephemeral=True)
     await asyncio.sleep(2)
-    await interaction.followup.send("Le bot va être désactivé")
+    await ctx.send("Le bot va être désactivé")
     await asyncio.sleep(2)
     print('Le bot va être désactivé')
     await asyncio.sleep(2)
     await bot.close()
 
 @slash.slash(description='Le bot fait des excuses.')
-async def service(interaction: discord.Interaction):
-    await interaction.response.send_message('Je suis de nouveau en service, Désolé pour le dérangement. @everyone')
+async def service(ctx: discord.InteractionContext):
+    await ctx.send('Je suis de nouveau en service, Désolé pour le dérangement. @everyone')
 
 @slash.slash(description='Donne le site du bot.')
-async def site(interaction: discord.Interaction):
-    await interaction.response.send_message('Je suis fier de vous présenter mon propre site !! @everyone: https://hover-bot.github.io/discord/')
+async def site(ctx: discord.InteractionContext):
+    await ctx.send('Je suis fier de vous présenter mon propre site !! @everyone: https://hover-bot.github.io/discord/')
 
 @slash.slash(description='Donne le ping du bot.')
-async def ping(interaction: discord.Interaction):
+async def ping(ctx: discord.InteractionContext):
     """ Pong ! """
     before = time.monotonic()
-    message = await interaction.response.send_message("Pong!")
+    message = await ctx.send("Pong!")
     ping = (time.monotonic() - before) * 1000
     await asyncio.sleep(1)
-    await interaction.edit_original_response(content=f"Mon ping est de `{int(ping)}ms`")
+    await ctx.edit_original_message(content=f"Mon ping est de `{int(ping)}ms`")
     print(f'Ping {int(ping)}ms')
 
 @slash.slash(description='Donne les informations sur un utilisateur.')
-async def infoutilisateur(interaction: discord.Interaction, member: discord.Member = None):
-    member = member or interaction.user
+async def infoutilisateur(ctx: discord.InteractionContext, member: discord.Member = None):
+    member = member or ctx.author
     embed = discord.Embed(title="User Info", description=member.mention, color=member.color)
     embed.add_field(name="Name", value=member.name, inline=True)
     embed.add_field(name="Joined", value=member.joined_at.strftime("%Y-%m-%d"), inline=True)
@@ -79,6 +79,6 @@ async def infoutilisateur(interaction: discord.Interaction, member: discord.Memb
     else:
         embed.set_thumbnail(url=member.default_avatar.url)
         
-    await interaction.response.send_message(embed=embed)
+    await ctx.send(embed=embed)
 
 bot.run("tokenbotdiscord")
