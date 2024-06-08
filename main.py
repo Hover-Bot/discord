@@ -81,4 +81,4 @@ async def infoutilisateur(ctx, member: discord.Member = None):
         
     await ctx.send(embed=embed)
 
-bot.run("TOKENBOTDISCORD")
+bot.run(os.getenv('DISCORD_BOT_TOKEN'))
