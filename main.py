@@ -3,23 +3,17 @@ import asyncio
 from discord.ext import commands
 import os
 import sys
-import socket
 import time
+from discord_slash import SlashCommand
 
 intents = discord.Intents().all()
 bot = commands.Bot(command_prefix="!", intents=intents)
-
-# Importer SlashCommand depuis discord_slash
-from discord_slash import SlashCommand
-
-# Initialisez SlashCommand avec votre bot
-slash = SlashCommand(bot)
+slash = SlashCommand(bot, sync_commands=True)
 
 # Décorateur pour vérifier si l'utilisateur est le propriétaire
-def is_owner(func):
-    def predicate(interaction):
-        if interaction.author.id == 1218502926885060649:
-            return True
+def is_owner():
+    def predicate(ctx):
+        return ctx.author.id == 1218502926885060649
     return commands.check(predicate)
 
 # Fonction pour redémarrer le programme
@@ -39,7 +33,7 @@ async def version(ctx):
 
 @slash.slash(description='Désactive le bot')
 async def eteindre(ctx):
-    await ctx.send(f"Commande acceptée.", ephemeral=True)
+    await ctx.send(f"Commande acceptée.", hidden=True)
     await asyncio.sleep(2)
     await ctx.send("Le bot va être désactivé")
     await asyncio.sleep(2)
@@ -62,7 +56,7 @@ async def ping(ctx):
     message = await ctx.send("Pong!")
     ping = (time.monotonic() - before) * 1000
     await asyncio.sleep(1)
-    await ctx.edit_original_message(content=f"Mon ping est de `{int(ping)}ms`")
+    await ctx.edit(content=f"Mon ping est de `{int(ping)}ms`")
     print(f'Ping {int(ping)}ms')
 
 @slash.slash(description='Donne les informations sur un utilisateur.')
