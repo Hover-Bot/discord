@@ -8,7 +8,7 @@ from discord_slash import SlashCommand, SlashContext
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
-slash = SlashCommand(bot, sync_on_cog_reload=True)
+slash = SlashCommand(bot, sync_commands=True)
 
 # Décorateur pour vérifier si l'utilisateur est le propriétaire
 def is_owner():
@@ -56,7 +56,7 @@ async def ping(ctx: SlashContext):
     message = await ctx.send("Pong!")
     ping = (time.monotonic() - before) * 1000
     await asyncio.sleep(1)
-    await ctx.edit(content=f"Mon ping est de `{int(ping)}ms`")
+    await message.edit(content=f"Mon ping est de `{int(ping)}ms`")
     print(f'Ping {int(ping)}ms')
 
 @slash.slash(name="infoutilisateur", description='Donne les informations sur un utilisateur.')
@@ -75,4 +75,4 @@ async def infoutilisateur(ctx: SlashContext, member: discord.Member = None):
         
     await ctx.send(embed=embed)
 
-bot.run(os.getenv('DISCORD_BOT_TOKEN'))
+bot.run(os.getenv('TOKENBOTDISCORD'))
