@@ -4,11 +4,11 @@ from discord.ext import commands
 import os
 import sys
 import time
-from discord_slash import SlashCommand
+from discord_slash import SlashCommand, SlashContext
 
-intents = discord.Intents().all()
+intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
-slash = SlashCommand(bot, sync_commands=True)
+slash = SlashCommand(bot, sync_on_cog_reload=True)
 
 # Décorateur pour vérifier si l'utilisateur est le propriétaire
 def is_owner():
@@ -27,12 +27,12 @@ async def on_ready():
     print(f"{bot.user.name} s'est bien connecté")
 
 # Commandes
-@slash.slash(description='Donne ma version.')
-async def version(ctx):
+@slash.slash(name="version", description='Donne ma version.')
+async def version(ctx: SlashContext):
     await ctx.send('Je suis à ma 38ème version')
 
-@slash.slash(description='Désactive le bot')
-async def eteindre(ctx):
+@slash.slash(name="eteindre", description='Désactive le bot')
+async def eteindre(ctx: SlashContext):
     await ctx.send(f"Commande acceptée.", hidden=True)
     await asyncio.sleep(2)
     await ctx.send("Le bot va être désactivé")
@@ -41,16 +41,16 @@ async def eteindre(ctx):
     await asyncio.sleep(2)
     await bot.close()
 
-@slash.slash(description='Le bot fait des excuses.')
-async def service(ctx):
+@slash.slash(name="service", description='Le bot fait des excuses.')
+async def service(ctx: SlashContext):
     await ctx.send('Je suis de nouveau en service, Désolé pour le dérangement. @everyone')
 
-@slash.slash(description='Donne le site du bot.')
-async def site(ctx):
+@slash.slash(name="site", description='Donne le site du bot.')
+async def site(ctx: SlashContext):
     await ctx.send('Je suis fier de vous présenter mon propre site !! @everyone: https://hover-bot.github.io/discord/')
 
-@slash.slash(description='Donne le ping du bot.')
-async def ping(ctx):
+@slash.slash(name="ping", description='Donne le ping du bot.')
+async def ping(ctx: SlashContext):
     """ Pong ! """
     before = time.monotonic()
     message = await ctx.send("Pong!")
@@ -59,8 +59,8 @@ async def ping(ctx):
     await ctx.edit(content=f"Mon ping est de `{int(ping)}ms`")
     print(f'Ping {int(ping)}ms')
 
-@slash.slash(description='Donne les informations sur un utilisateur.')
-async def infoutilisateur(ctx, member: discord.Member = None):
+@slash.slash(name="infoutilisateur", description='Donne les informations sur un utilisateur.')
+async def infoutilisateur(ctx: SlashContext, member: discord.Member = None):
     member = member or ctx.author
     embed = discord.Embed(title="User Info", description=member.mention, color=member.color)
     embed.add_field(name="Name", value=member.name, inline=True)
