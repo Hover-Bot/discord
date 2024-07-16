@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine à sous</title>
+    <link rel="stylesheet" href="assets/css/stylesmas.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Machine à sous</h1>
+        <p>Pièces disponibles : <span id="coins">1000</span></p>
+        <button onclick="getCoin()">Obtenir une pièce</button>
+        <input type="number" id="bet" placeholder="Mise" min="1">
+        <button onclick="spin()">Tourner</button>
+        <div class="slot-machine">
+            <div class="reel" id="reel1"></div>
+            <div class="reel" id="reel2"></div>
+            <div class="reel" id="reel3"></div>
+        </div>
+        <p id="result"></p>
+    </div>
+    <script src="assets/js/scriptmas.js"></script>
+</body>
+</html>
